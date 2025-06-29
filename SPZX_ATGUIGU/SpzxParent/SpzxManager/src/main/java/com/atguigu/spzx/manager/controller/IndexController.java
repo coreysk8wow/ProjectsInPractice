@@ -1,9 +1,9 @@
 package com.atguigu.spzx.manager.controller;
 
-import com.atguigu.spzx.manager.controller.config.spzx.model.request.system.LoginReq;
-import com.atguigu.spzx.manager.controller.config.spzx.model.response.common.Result;
-import com.atguigu.spzx.manager.controller.config.spzx.model.response.common.ResultCodeEnum;
-import com.atguigu.spzx.manager.controller.config.spzx.model.response.system.LoginResp;
+import com.atguigu.spzx.model.request.system.LoginReq;
+import com.atguigu.spzx.model.response.common.Result;
+import com.atguigu.spzx.model.response.common.ResultCodeEnum;
+import com.atguigu.spzx.model.response.system.LoginResp;
 import com.atguigu.spzx.manager.service.ISysUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

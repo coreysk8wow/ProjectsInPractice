@@ -1,6 +1,6 @@
-package com.atguigu.spzx.manager.controller.config.spzx.model.entity.system;
+package com.atguigu.spzx.model.entity.system;
 
-import com.atguigu.spzx.manager.controller.config.spzx.model.entity.base.BaseEntity;
+import com.atguigu.spzx.model.entity.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

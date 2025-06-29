@@ -1,9 +1,9 @@
 package com.atguigu.spzx.manager.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.atguigu.spzx.manager.controller.config.spzx.model.request.system.LoginReq;
-import com.atguigu.spzx.manager.controller.config.spzx.model.entity.system.SysUser;
-import com.atguigu.spzx.manager.controller.config.spzx.model.response.system.LoginResp;
+import com.atguigu.spzx.model.request.system.LoginReq;
+import com.atguigu.spzx.model.entity.system.SysUser;
+import com.atguigu.spzx.model.response.system.LoginResp;
 import com.atguigu.spzx.manager.mapper.ISysUserMapper;
 import com.atguigu.spzx.manager.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
-package com.atguigu.spzx.manager.controller.config.spzx.model.response.h5;
+package com.atguigu.spzx.model.response.h5;
 
-import com.atguigu.spzx.manager.controller.config.spzx.model.entity.product.Category;
-import com.atguigu.spzx.manager.controller.config.spzx.model.entity.product.ProductSku;
+import com.atguigu.spzx.model.entity.product.Category;
+import com.atguigu.spzx.model.entity.product.ProductSku;
 import lombok.Data;
 
 import java.util.List;

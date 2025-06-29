@@ -1,6 +1,6 @@
-package com.atguigu.spzx.manager.controller.config.spzx.model.entity.order;
+package com.atguigu.spzx.model.entity.order;
 
-import com.atguigu.spzx.manager.controller.config.spzx.model.entity.base.BaseEntity;
+import com.atguigu.spzx.model.entity.base.BaseEntity;
 import lombok.Data;
 
 import java.math.BigDecimal;

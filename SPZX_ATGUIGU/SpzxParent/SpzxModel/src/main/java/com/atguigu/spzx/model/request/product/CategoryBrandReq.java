@@ -1,4 +1,4 @@
-package com.atguigu.spzx.manager.controller.config.spzx.model.request.product;
+package com.atguigu.spzx.model.request.product;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

@@ -1,8 +1,8 @@
-package com.atguigu.spzx.manager.controller.config.spzx.model.response.h5;
+package com.atguigu.spzx.model.response.h5;
 
 import com.alibaba.fastjson.JSONArray;
-import com.atguigu.spzx.manager.controller.config.spzx.model.entity.product.Product;
-import com.atguigu.spzx.manager.controller.config.spzx.model.entity.product.ProductSku;
+import com.atguigu.spzx.model.entity.product.Product;
+import com.atguigu.spzx.model.entity.product.ProductSku;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

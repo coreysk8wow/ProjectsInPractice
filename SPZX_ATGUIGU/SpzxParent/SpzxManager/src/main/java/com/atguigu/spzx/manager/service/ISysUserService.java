@@ -1,7 +1,7 @@
 package com.atguigu.spzx.manager.service;
 
-import com.atguigu.spzx.manager.controller.config.spzx.model.request.system.LoginReq;
-import com.atguigu.spzx.manager.controller.config.spzx.model.response.system.LoginResp;
+import com.atguigu.spzx.model.request.system.LoginReq;
+import com.atguigu.spzx.model.response.system.LoginResp;
 
 public interface ISysUserService {
 

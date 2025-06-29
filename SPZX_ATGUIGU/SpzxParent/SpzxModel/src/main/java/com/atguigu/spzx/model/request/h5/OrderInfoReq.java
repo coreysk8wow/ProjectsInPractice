@@ -1,6 +1,6 @@
-package com.atguigu.spzx.manager.controller.config.spzx.model.request.h5;
+package com.atguigu.spzx.model.request.h5;
 
-import com.atguigu.spzx.manager.controller.config.spzx.model.entity.order.OrderItem;
+import com.atguigu.spzx.model.entity.order.OrderItem;
 import lombok.Data;
 
 import java.math.BigDecimal;
