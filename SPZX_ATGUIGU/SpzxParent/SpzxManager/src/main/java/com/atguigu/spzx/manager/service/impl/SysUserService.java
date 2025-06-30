@@ -1,8 +1,10 @@
 package com.atguigu.spzx.manager.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.atguigu.spzx.common.exception.GuiguException;
 import com.atguigu.spzx.model.request.system.LoginReq;
 import com.atguigu.spzx.model.entity.system.SysUser;
+import com.atguigu.spzx.model.response.common.ResultCodeEnum;
 import com.atguigu.spzx.model.response.system.LoginResp;
 import com.atguigu.spzx.manager.mapper.ISysUserMapper;
 import com.atguigu.spzx.manager.service.ISysUserService;
@@ -17,11 +19,13 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class SysUserService implements ISysUserService {
 
-    private final ISysUserMapper sysUserMapper;
-
-    private final RedisTemplate<String , String> redisTemplate;
+    @Autowired
+    private ISysUserMapper sysUserMapper;
 
     @Autowired
+    private RedisTemplate<String , String> redisTemplate;
+
+//    @Autowired
     public SysUserService(ISysUserMapper sysUserMapper,
                           RedisTemplate<String , String> redisTemplate) {
         this.sysUserMapper = sysUserMapper;
@@ -33,14 +37,16 @@ public class SysUserService implements ISysUserService {
         // 根据用户名查询用户
         SysUser sysUser = sysUserMapper.selectByUserName(loginReq.getUserName());
         if (sysUser == null) {
-            throw new RuntimeException("用户名或者密码错误") ;
+//            throw new RuntimeException("用户名或者密码错误") ;
+            throw new GuiguException(ResultCodeEnum.LOGIN_ERROR);
         }
 
         // 验证密码是否正确
         String inputPassword = loginReq.getPassword();
         String pwdDigest = DigestUtils.md5DigestAsHex(inputPassword.getBytes());
         if (!pwdDigest.equals(sysUser.getPassword())) {
-            throw new RuntimeException("用户名或者密码错误") ;
+//            throw new RuntimeException("用户名或者密码错误") ;
+            throw new GuiguException(ResultCodeEnum.LOGIN_ERROR);
         }
 
         // 生成令牌，保存数据到Redis中

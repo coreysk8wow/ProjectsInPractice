@@ -1,4 +1,4 @@
-package com.atguigu.spzx.manager.controller.config;
+package com.atguigu.spzx.common.config;
 
 public class Main {
     public static void main(String[] args) {

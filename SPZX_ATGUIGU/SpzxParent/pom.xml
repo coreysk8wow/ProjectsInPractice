@@ -24,10 +24,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mysql.verison>8.0.30</mysql.verison>
+        <mysql.version>8.0.33</mysql.version>
         <fastjson.version>2.0.57</fastjson.version>
         <lombok.version>1.18.38</lombok.version>
         <mybatis.version>3.0.4</mybatis.version>
