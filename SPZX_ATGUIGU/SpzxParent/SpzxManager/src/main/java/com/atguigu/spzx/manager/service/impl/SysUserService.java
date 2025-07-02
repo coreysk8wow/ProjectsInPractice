@@ -19,13 +19,11 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class SysUserService implements ISysUserService {
 
-    @Autowired
-    private ISysUserMapper sysUserMapper;
+    private final ISysUserMapper sysUserMapper;
+
+    private final RedisTemplate<String , String> redisTemplate;
 
     @Autowired
-    private RedisTemplate<String , String> redisTemplate;
-
-//    @Autowired
     public SysUserService(ISysUserMapper sysUserMapper,
                           RedisTemplate<String , String> redisTemplate) {
         this.sysUserMapper = sysUserMapper;
