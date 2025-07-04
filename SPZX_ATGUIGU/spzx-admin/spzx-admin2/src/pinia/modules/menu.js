@@ -120,10 +120,12 @@ export const useMenus = defineStore('menu', () => {
     // // 方式一：只有固定菜单
     // const menus = getFilterMenus(fixedRoutes)
     // commit('SET_MENUS', menus)
+    const menus = getFilterMenus(fixedRoutes)
+    setMenus(menus)
 
     // 方式二：有动态菜单
     // 从后台获取菜单
-    const { code, data } = await GetMenus()
+    /* const { code, data } = await GetMenus()
 
     if (+code === 200) {
       // 添加路由之前先删除所有动态路由
@@ -136,11 +138,11 @@ export const useMenus = defineStore('menu', () => {
       // 生成菜单
       const menus = getFilterMenus([...fixedRoutes, ...filterRoutes])
       setMenus(menus)
-
+ 
       // 添加动态路由，由于只做了二级路由，所以需要将三级之后的children提到二级
       const arr = formatRoutes(filterRoutes)
       arr.forEach(route => router.addRoute(route))
-    }
+    } */
   }
   return {
     menus,

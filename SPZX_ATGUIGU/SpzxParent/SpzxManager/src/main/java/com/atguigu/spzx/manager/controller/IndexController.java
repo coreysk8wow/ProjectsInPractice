@@ -1,6 +1,7 @@
 package com.atguigu.spzx.manager.controller;
 
 import com.atguigu.spzx.manager.service.IValidateCodeService;
+import com.atguigu.spzx.model.entity.system.SysUser;
 import com.atguigu.spzx.model.request.system.LoginReq;
 import com.atguigu.spzx.model.response.common.Result;
 import com.atguigu.spzx.model.response.common.ResultCodeEnum;
@@ -35,6 +36,13 @@ public class IndexController {
     public Result<ValidateCodeResp> generateValidateCode() {
         ValidateCodeResp validateCodeResp = validateCodeService.generateValidateCode();
         return Result.build(validateCodeResp , ResultCodeEnum.SUCCESS) ;
+    }
+
+    @Operation(summary = "获取用户信息接口")
+    @GetMapping(value = "/getUserInfo")
+    public Result<SysUser> getUserInfo(@RequestHeader(name = "token") String token) {
+        SysUser sysUser = sysUserService.getUserInfo(token) ;
+        return Result.build(sysUser , ResultCodeEnum.SUCCESS) ;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.atguigu.spzx.manager.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.atguigu.spzx.common.exception.GuiguException;
 import com.atguigu.spzx.model.request.system.LoginReq;
@@ -32,6 +33,19 @@ public class SysUserService implements ISysUserService {
 
     @Override
     public LoginResp login(LoginReq loginReq) {
+        // 校验验证码是否正确
+        String captcha = loginReq.getCaptcha();     // 用户输入的验证码
+        String codeKey = loginReq.getCodeKey();     // redis中验证码的数据key
+
+        // 从Redis中获取验证码
+        String redisCode = redisTemplate.opsForValue().get("user:login:validatecode:" + codeKey);
+        if(StrUtil.isEmpty(redisCode) || !StrUtil.equalsIgnoreCase(redisCode , captcha)) {
+            throw new GuiguException(ResultCodeEnum.VALIDATECODE_ERROR) ;
+        }
+
+        // 验证通过后，删除redis中的验证码
+        redisTemplate.delete("user:login:validatecode:" + codeKey) ;
+
         // 根据用户名查询用户
         SysUser sysUser = sysUserMapper.selectByUserName(loginReq.getUserName());
         if (sysUser == null) {
@@ -58,5 +72,11 @@ public class SysUserService implements ISysUserService {
         loginResp.setRefresh_token("");
 
         return loginResp;
+    }
+
+    @Override
+    public SysUser getUserInfo(String token) {
+        String userJson = redisTemplate.opsForValue().get("user:login:" + token);
+        return JSON.parseObject(userJson , SysUser.class) ;
     }
 }

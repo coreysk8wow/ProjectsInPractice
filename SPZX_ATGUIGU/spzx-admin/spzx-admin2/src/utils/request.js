@@ -36,7 +36,7 @@ import { useApp } from '@/pinia/modules/app'
 
 const service = axios.create({
   // baseURL: '/',
-  baseURL: 'http://localhost:8501', 
+  baseURL: 'http://localhost:8501',
   timeout: 10000,
   withCredentials: true,
 })
@@ -46,7 +46,10 @@ service.interceptors.request.use(
   config => {
     const { authorization } = useApp()
     if (authorization) {
-      config.headers.Authorization = `Bearer ${authorization.token}`
+      // config.headers.Authorization = `Bearer ${authorization.token}`
+
+      // 上传传递方式后端解析太麻烦，因此可以更改传递token方式为如下方式
+      config.headers.token = `${authorization.token}`
     }
     return config
   },
