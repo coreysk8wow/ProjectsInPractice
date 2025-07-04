@@ -31,6 +31,13 @@ public class IndexController {
         return Result.build(login, ResultCodeEnum.SUCCESS);
     }
 
+    @Operation(summary = "登出接口")
+    @GetMapping(value = "/logout")
+    public Result logout(@RequestHeader(value = "token") String token) {
+        sysUserService.logout(token);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
     @Operation(summary = "生成验证码接口")
     @GetMapping(value = "/generateValidateCode")
     public Result<ValidateCodeResp> generateValidateCode() {

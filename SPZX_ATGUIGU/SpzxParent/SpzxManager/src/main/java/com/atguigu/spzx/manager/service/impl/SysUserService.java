@@ -75,6 +75,11 @@ public class SysUserService implements ISysUserService {
     }
 
     @Override
+    public void logout(String token) {
+        redisTemplate.delete("user:login:" + token);
+    }
+
+    @Override
     public SysUser getUserInfo(String token) {
         String userJson = redisTemplate.opsForValue().get("user:login:" + token);
         return JSON.parseObject(userJson , SysUser.class) ;

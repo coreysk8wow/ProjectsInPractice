@@ -13,5 +13,7 @@ public interface ISysUserService {
      */
     LoginResp login(LoginReq loginDto);
 
+    void logout(String token);
+
     SysUser getUserInfo(String token);
 }
