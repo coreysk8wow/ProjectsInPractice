@@ -16,7 +16,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class LoginAuthInterceptor implements HandlerInterceptor {
@@ -90,5 +89,4 @@ public class LoginAuthInterceptor implements HandlerInterceptor {
         // 清除ThreadLocal中的用户信息
         AuthContextUtil.remove();
     }
-
 }
