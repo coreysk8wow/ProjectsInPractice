@@ -16,4 +16,6 @@ public interface ISysUserService {
     void logout(String token);
 
     SysUser getUserInfo(String token);
+
+    void resetUserTimeout(String token, int timeoutInSeconds);
 }

@@ -84,4 +84,9 @@ public class SysUserService implements ISysUserService {
         String userJson = redisTemplate.opsForValue().get("user:login:" + token);
         return JSON.parseObject(userJson , SysUser.class) ;
     }
+
+    @Override
+    public void resetUserTimeout(String token, int timeoutInSeconds) {
+        redisTemplate.expire("user:login:" + token, timeoutInSeconds, TimeUnit.SECONDS);
+    }
 }

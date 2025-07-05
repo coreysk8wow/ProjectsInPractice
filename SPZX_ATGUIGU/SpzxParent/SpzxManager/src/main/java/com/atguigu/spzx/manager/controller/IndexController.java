@@ -1,13 +1,14 @@
 package com.atguigu.spzx.manager.controller;
 
+import com.atguigu.spzx.manager.service.ISysUserService;
 import com.atguigu.spzx.manager.service.IValidateCodeService;
 import com.atguigu.spzx.model.entity.system.SysUser;
 import com.atguigu.spzx.model.request.system.LoginReq;
 import com.atguigu.spzx.model.response.common.Result;
 import com.atguigu.spzx.model.response.common.ResultCodeEnum;
 import com.atguigu.spzx.model.response.system.LoginResp;
-import com.atguigu.spzx.manager.service.ISysUserService;
 import com.atguigu.spzx.model.response.system.ValidateCodeResp;
+import com.atguigu.spzx.utils.AuthContextUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +46,17 @@ public class IndexController {
         return Result.build(validateCodeResp , ResultCodeEnum.SUCCESS) ;
     }
 
-    @Operation(summary = "获取用户信息接口")
+    /*@Operation(summary = "获取用户信息接口")
     @GetMapping(value = "/getUserInfo")
     public Result<SysUser> getUserInfo(@RequestHeader(name = "token") String token) {
         SysUser sysUser = sysUserService.getUserInfo(token) ;
-        return Result.build(sysUser , ResultCodeEnum.SUCCESS) ;
+        return Result.build(sysUser, ResultCodeEnum.SUCCESS) ;
+    }*/
+
+    @Operation(summary = "获取用户信息接口")
+    @GetMapping(value = "/getUserInfo")
+    public Result<SysUser> getUserInfo() {
+        return Result.build(AuthContextUtil.get(), ResultCodeEnum.SUCCESS) ;
     }
 
 }
