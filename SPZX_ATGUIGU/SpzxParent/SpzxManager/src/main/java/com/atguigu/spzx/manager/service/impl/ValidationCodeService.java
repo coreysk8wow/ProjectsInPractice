@@ -14,12 +14,12 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
-public class ValidateCodeService implements IValidateCodeService {
+public class ValidationCodeService implements IValidateCodeService {
 
     private final RedisTemplate<String , String> redisTemplate ;
 
     @Autowired
-    public ValidateCodeService(RedisTemplate<String, String> redisTemplate) {
+    public ValidationCodeService(RedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

@@ -40,5 +40,4 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 .excludePathPatterns(userAuthProperties.getNoAuthUrls())
                 .addPathPatterns("/**");
     }
-
 }

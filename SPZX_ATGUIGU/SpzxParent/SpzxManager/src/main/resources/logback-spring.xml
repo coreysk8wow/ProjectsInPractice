@@ -25,7 +25,7 @@
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <!-- 临界值过滤器 -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
+            <level>DEBUG</level>
         </filter>
         <encoder>
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
@@ -46,7 +46,7 @@
     <!-- 开发环境 -->
     <springProfile name="dev">
         <!-- com.atguigu日志记录器：业务程序INFO级别  -->
-        <logger name="com.atguigu" level="INFO" />
+        <logger name="com.atguigu" level="DEBUG" />
         <!-- 根日志记录器：INFO级别  -->
         <root level="INFO">
             <appender-ref ref="CONSOLE" />

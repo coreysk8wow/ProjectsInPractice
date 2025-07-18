@@ -8,8 +8,8 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/db_spzx?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
-    username: ls
-    password: 123
+    username: root
+    password: root
   # Redis的相关配置
   data:
     redis:
@@ -20,7 +20,7 @@ spring:
 # mybatis的配置
 mybatis:
   config-location: classpath:/mybatis-config.xml
-  mapper-locations: classpath:/mapper/*/*.xml
+  mapper-locations: classpath:/mapper/*.xml, classpath:/mapper/*/*.xml
 
 
 # 自定义配置

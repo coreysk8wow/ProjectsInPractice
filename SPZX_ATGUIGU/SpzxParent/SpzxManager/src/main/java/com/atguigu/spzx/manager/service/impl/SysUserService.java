@@ -9,6 +9,7 @@ import com.atguigu.spzx.model.response.common.ResultCodeEnum;
 import com.atguigu.spzx.model.response.system.LoginResp;
 import com.atguigu.spzx.manager.mapper.ISysUserMapper;
 import com.atguigu.spzx.manager.service.ISysUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import org.springframework.util.DigestUtils;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 public class SysUserService implements ISysUserService {
 
@@ -65,6 +67,7 @@ public class SysUserService implements ISysUserService {
         String token = UUID.randomUUID().toString().replace("-", "");
         redisTemplate.opsForValue().set("user:login:" + token, JSON.toJSONString(sysUser),
                 30, TimeUnit.MINUTES);
+        log.debug("User token: {}", token);
 
         // 构建响应结果对象
         LoginResp loginResp = new LoginResp();

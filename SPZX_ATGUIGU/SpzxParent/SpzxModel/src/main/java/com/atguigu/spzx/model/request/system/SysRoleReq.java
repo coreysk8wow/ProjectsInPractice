@@ -9,5 +9,4 @@ public class SysRoleReq {
 
     @Schema(description = "角色名称")
     private String roleName ;
-
 }
