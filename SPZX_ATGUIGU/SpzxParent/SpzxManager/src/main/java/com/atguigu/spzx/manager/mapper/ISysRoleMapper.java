@@ -8,7 +8,14 @@ import java.util.List;
 
 @Mapper
 public interface ISysRoleMapper {
-    List<SysRole> findByPage(SysRoleReq sysRoleReq);
+    /**
+     * 根据角色名称分页查询角色列表
+     * 角色名称不填，获取所有角色
+     *
+     * @param sysRoleReq
+     * @return
+     */
+    List<SysRole> getRolesByRolename(SysRoleReq sysRoleReq);
 
     void save(SysRole sysRole);
 
@@ -20,4 +27,6 @@ public interface ISysRoleMapper {
      * @param id 角色ID
      */
     void deleteById(Long id);
+
+
 }

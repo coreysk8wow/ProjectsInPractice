@@ -19,7 +19,7 @@
         </where>
     </sql>
 
-    <select id="findByPage" resultMap="sysRoleMap">
+    <select id="getRolesByRolename" resultMap="sysRoleMap">
         select
         <include refid="columns"/>
         from sys_role

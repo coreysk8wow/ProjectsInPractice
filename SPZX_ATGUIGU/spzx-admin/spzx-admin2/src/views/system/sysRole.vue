@@ -188,6 +188,9 @@ const deleteRole = async id => {
     ElMessage.error('角色ID不能为空')
     return
   }
+
+  console.log('delete role, type of id = ', typeof id)
+
   const { code, message } = await DeleteSysRole(id)
   if (code === 200) {
     ElMessage.success('角色删除成功: ' + message)

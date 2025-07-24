@@ -20,7 +20,7 @@ public class SysRoleService implements ISysRoleService {
     @Override
     public PageInfo<SysRole> findByPage(SysRoleReq sysRoleReq, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<SysRole> roleList = sysRoleMapper.findByPage(sysRoleReq);
+        List<SysRole> roleList = sysRoleMapper.getRolesByRolename(sysRoleReq);
         return new PageInfo<SysRole>(roleList);
     }
 

@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 @Schema(description = "请求参数实体类")
 public class SysUserReq {
-
     @Schema(description = "搜索关键字")
     private String keyword ;
 
@@ -15,5 +14,4 @@ public class SysUserReq {
 
     @Schema(description = "结束时间")
     private String createTimeEnd;
-
 }

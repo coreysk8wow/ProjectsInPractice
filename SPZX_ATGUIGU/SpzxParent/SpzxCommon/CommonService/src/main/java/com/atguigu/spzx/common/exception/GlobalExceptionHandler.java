@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 统一异常处理类
  */
 @Slf4j
-//@ControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)

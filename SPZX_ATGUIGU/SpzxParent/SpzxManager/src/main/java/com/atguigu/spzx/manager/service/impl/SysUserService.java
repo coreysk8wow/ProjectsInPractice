@@ -3,18 +3,29 @@ package com.atguigu.spzx.manager.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.atguigu.spzx.common.exception.GuiguException;
+import com.atguigu.spzx.manager.mapper.ISysRoleMapper;
+import com.atguigu.spzx.manager.mapper.ISysUserRoleMapper;
+import com.atguigu.spzx.model.entity.system.SysRole;
+import com.atguigu.spzx.model.request.system.AssignRoleReq;
 import com.atguigu.spzx.model.request.system.LoginReq;
 import com.atguigu.spzx.model.entity.system.SysUser;
+import com.atguigu.spzx.model.request.system.SysUserReq;
 import com.atguigu.spzx.model.response.common.ResultCodeEnum;
 import com.atguigu.spzx.model.response.system.LoginResp;
 import com.atguigu.spzx.manager.mapper.ISysUserMapper;
 import com.atguigu.spzx.manager.service.ISysUserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -23,14 +34,20 @@ import java.util.concurrent.TimeUnit;
 public class SysUserService implements ISysUserService {
 
     private final ISysUserMapper sysUserMapper;
+    private final ISysUserRoleMapper sysUserRoleMapper;
+    private final ISysRoleMapper sysRoleMapper;
 
     private final RedisTemplate<String , String> redisTemplate;
 
     @Autowired
     public SysUserService(ISysUserMapper sysUserMapper,
-                          RedisTemplate<String , String> redisTemplate) {
+                          RedisTemplate<String , String> redisTemplate,
+                          ISysUserRoleMapper sysUserRoleMapper,
+                          ISysRoleMapper sysRoleMapper) {
         this.sysUserMapper = sysUserMapper;
         this.redisTemplate = redisTemplate;
+        this.sysUserRoleMapper = sysUserRoleMapper;
+        this.sysRoleMapper = sysRoleMapper;
     }
 
     @Override
@@ -92,4 +109,98 @@ public class SysUserService implements ISysUserService {
     public void resetUserTimeout(String token, int timeoutInSeconds) {
         redisTemplate.expire("user:login:" + token, timeoutInSeconds, TimeUnit.SECONDS);
     }
+
+    @Override
+    public PageInfo<SysUser> findByPage(SysUserReq sysUserReq, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<SysUser> userList = sysUserMapper.findByPage(sysUserReq);
+        return new PageInfo<SysUser>(userList);
+    }
+
+    @Override
+    public SysUser findById(Long id) {
+        return sysUserMapper.findById(id);
+    }
+
+    @Override
+    public void addUser(SysUser sysUser) {
+        // 检查用户名是否已存在
+        SysUser existingUser = sysUserMapper.selectByUserName(sysUser.getUserName());
+        if (existingUser != null) {
+            throw new GuiguException(ResultCodeEnum.USER_NAME_IS_EXISTS);
+        }
+
+        // 对密码进行MD5加密
+        String passwordDigest = DigestUtils.md5DigestAsHex(sysUser.getPassword().getBytes());
+        sysUser.setPassword(passwordDigest);
+
+        // 插入用户数据
+        sysUserMapper.addUser(sysUser);
+    }
+
+    @Override
+    public void updateUser(SysUser sysUser) {
+        // 检查用户名是否已存在
+        SysUser existingUser = findById(sysUser.getId());
+
+        if (existingUser == null) {
+            throw new GuiguException(ResultCodeEnum.USER_NOT_EXISTS);
+        } else if (!existingUser.getUserName().equals(sysUser.getUserName())) {
+            throw new GuiguException(ResultCodeEnum.USERNAME_CHANGING_FORBIDDEN);
+        }
+
+        // 对密码进行MD5加密
+        if (StrUtil.isNotEmpty(sysUser.getPassword())) {
+            String passwordDigest = DigestUtils.md5DigestAsHex(sysUser.getPassword().getBytes());
+            sysUser.setPassword(passwordDigest);
+        }
+
+        // 更新用户数据
+        sysUserMapper.updateById(sysUser);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        sysUserMapper.deleteById(id);
+    }
+
+    @Transactional
+    @Override
+    public void assignRoleToUser(AssignRoleReq assignRoleReq) {
+        final Long userId = assignRoleReq.getUserId();
+        List<Long> roleIdListNew = assignRoleReq.getRoleIdList();
+        Set<Long> roleIdSetNew = new HashSet<>(roleIdListNew);
+
+        List<Long> roleIdListOld = sysUserRoleMapper.getRoleIdsByUserId(userId);
+        Set<Long> roleIdSetOld = new HashSet<>(roleIdListOld);
+
+        // Elements in NEW but not in OLD (NEW - OLD)
+        Set<Long> onlyInNew = new HashSet<>(roleIdSetNew);
+        onlyInNew.removeAll(roleIdSetOld);
+        log.debug("Only in NEW: " + onlyInNew);
+
+        // Elements in B but not in NEW (OLD - NEW)
+        Set<Long> onlyInOld = new HashSet<>(roleIdSetOld);
+        onlyInOld.removeAll(roleIdSetNew);
+        log.debug("Only in OLD: " + onlyInOld);
+
+        // Elements in both NEW and OLD (NEW ∩ OLD)
+        Set<Long> inBoth = new HashSet<>(roleIdSetNew);
+        inBoth.retainAll(roleIdSetOld);
+        log.debug("In both NEW and OLD: " + inBoth);
+
+        if (!onlyInNew.isEmpty()) {
+            // 如果有新增的角色ID，则插入到sys_user_role表中
+            for (Long roleId : onlyInNew) {
+                sysUserRoleMapper.insertUserRoleByUserId(userId, roleId);
+            }
+        }
+        if (!onlyInOld.isEmpty()) {
+            // 如果有删除的角色ID，则从sys_user_role表中删除
+            for (Long roleId : onlyInOld) {
+                sysUserRoleMapper.deleteByUserIdAndRoleId(userId, roleId);
+            }
+        }
+    }
+
 }
