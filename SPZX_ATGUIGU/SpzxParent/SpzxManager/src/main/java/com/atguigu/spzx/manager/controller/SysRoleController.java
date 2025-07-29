@@ -1,7 +1,9 @@
 package com.atguigu.spzx.manager.controller;
 
+import com.atguigu.spzx.manager.service.ISysRoleMenuService;
 import com.atguigu.spzx.manager.service.ISysRoleService;
 import com.atguigu.spzx.model.entity.system.SysRole;
+import com.atguigu.spzx.model.request.system.AssignMenuReq;
 import com.atguigu.spzx.model.request.system.SysRoleReq;
 import com.atguigu.spzx.model.response.common.Result;
 import com.atguigu.spzx.model.response.common.ResultCodeEnum;
@@ -12,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Slf4j
 @Tag(name = "角色接口")
 @RestController
@@ -20,6 +24,9 @@ public class SysRoleController {
 
     @Autowired
     private ISysRoleService sysRoleService;
+
+    @Autowired
+    private ISysRoleMenuService sysRoleMenuService;
 
     @Operation(summary = "分页查询角色列表接口")
     @PostMapping(value = "/findByPage/{pageNum}/{pageSize}")
@@ -59,6 +66,21 @@ public class SysRoleController {
     public Result deleteById(@PathVariable Long id) {
         sysRoleService.deleteById(id);
         log.debug("删除角色ID: {}", id);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "根据角色ID查询相应角色的菜单和全部菜单接口")
+    @GetMapping(value = "/getAllMenus/{roleId}")
+    public Result<Map<String, Object>> getAllMenus(@PathVariable Long roleId) {
+        Map<String, Object> menuList = sysRoleMenuService.findSysRoleMenuByRoleId(roleId);
+        return Result.build(menuList, ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "给角色分配菜单接口")
+    @PostMapping(value = "/assignMenuToRole")
+    public Result assignMenuToRole(@RequestBody AssignMenuReq assignMenuReq) {
+        sysRoleMenuService.assignMenuToRole(assignMenuReq);
+        log.debug("给角色分配菜单: {}", assignMenuReq);
         return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 

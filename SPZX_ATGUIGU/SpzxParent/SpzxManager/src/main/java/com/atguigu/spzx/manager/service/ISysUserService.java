@@ -30,7 +30,7 @@ public interface ISysUserService {
 
     void updateUser(SysUser sysUser);
 
-    void deleteById(Long id);
+    void deleteById(Long id, boolean isCascade);
 
     void assignRoleToUser(AssignRoleReq assignRoleReq);
 

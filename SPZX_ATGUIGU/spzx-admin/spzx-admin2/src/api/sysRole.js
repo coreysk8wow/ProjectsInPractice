@@ -36,3 +36,20 @@ export const DeleteSysRole = id => {
     method: 'delete',
   })
 }
+
+// 查询指定角色所对应的菜单id和全部菜单
+export const GetSysRoleMenuIds = roleId => {
+  return request({
+    url: `${base_url}/getAllMenus/${roleId}`,
+    method: 'get',
+  })
+}
+
+// 根据角色分配菜单请求方法
+export const AssignMenuToRole = assignMenuReq => {
+  return request({
+    url: `${base_url}/assignMenuToRole`,
+    method: 'post',
+    data: assignMenuReq,
+  })
+}

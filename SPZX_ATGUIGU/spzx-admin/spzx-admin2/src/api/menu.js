@@ -11,11 +11,12 @@
  */
 import request from '@/utils/request'
 
+const base_url = '/admin/system/sysMenu'
+
 // 获取菜单
-export const GetMenus = params => {
+export const GetMenusByUser = params => {
   return request({
-    url: '/api/menus',
+    url: `${base_url}/getUserMenu`,
     method: 'get',
-    params,
   })
 }

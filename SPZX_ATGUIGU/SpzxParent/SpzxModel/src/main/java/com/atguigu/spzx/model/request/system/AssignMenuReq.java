@@ -13,7 +13,7 @@ public class AssignMenuReq {
     @Schema(description = "角色id")
     private Long roleId;			// 角色id
 
+    // 选中的菜单id的集合; Map的键表示菜单的id，值表示是否为半开; 0否，1是
     @Schema(description = "选中的菜单id的集合")
-    private List<Map<String , Number>> menuIdList;	// 选中的菜单id的集合; Map的键表示菜单的id，值表示是否为半开; 0否，1是
-
+    private List<Map<String , Long>> menuIdList;
 }

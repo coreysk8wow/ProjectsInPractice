@@ -61,7 +61,7 @@ public class SysUserController {
     @Operation(summary = "根据用户ID删除用户接口")
     @DeleteMapping(value = "/deleteById/{id}")
     public Result deleteById(@PathVariable Long id) {
-        sysUserService.deleteById(id);
+        sysUserService.deleteById(id, true);
         return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 

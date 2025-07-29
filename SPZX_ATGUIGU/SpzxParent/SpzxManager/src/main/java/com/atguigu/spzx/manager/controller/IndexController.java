@@ -1,5 +1,6 @@
 package com.atguigu.spzx.manager.controller;
 
+import com.atguigu.spzx.manager.service.ISysMenuService;
 import com.atguigu.spzx.manager.service.ISysUserService;
 import com.atguigu.spzx.manager.service.IValidateCodeService;
 import com.atguigu.spzx.model.entity.system.SysUser;
@@ -25,6 +26,9 @@ public class IndexController {
     @Autowired
     private IValidateCodeService validateCodeService;
 
+    @Autowired
+    private ISysMenuService sysMenuService;
+
     @Operation(summary = "登陆接口")
     @PostMapping(value = "/login")
     public Result<LoginResp> login(@RequestBody LoginReq loginReq) {
@@ -45,13 +49,6 @@ public class IndexController {
         ValidateCodeResp validateCodeResp = validateCodeService.generateValidateCode();
         return Result.build(validateCodeResp , ResultCodeEnum.SUCCESS) ;
     }
-
-    /*@Operation(summary = "获取用户信息接口")
-    @GetMapping(value = "/getUserInfo")
-    public Result<SysUser> getUserInfo(@RequestHeader(name = "token") String token) {
-        SysUser sysUser = sysUserService.getUserInfo(token) ;
-        return Result.build(sysUser, ResultCodeEnum.SUCCESS) ;
-    }*/
 
     @Operation(summary = "获取用户信息接口")
     @GetMapping(value = "/getUserInfo")

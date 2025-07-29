@@ -160,8 +160,11 @@ public class SysUserService implements ISysUserService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id, boolean isCascade) {
         sysUserMapper.deleteById(id);
+        if (isCascade) {
+            sysUserRoleMapper.deleteByUserId(id);
+        }
     }
 
     @Transactional

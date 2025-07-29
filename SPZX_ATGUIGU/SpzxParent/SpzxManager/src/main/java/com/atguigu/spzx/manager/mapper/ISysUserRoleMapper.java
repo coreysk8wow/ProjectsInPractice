@@ -1,5 +1,6 @@
 package com.atguigu.spzx.manager.mapper;
 
+import com.atguigu.spzx.model.entity.system.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,4 +17,6 @@ public interface ISysUserRoleMapper {
 
     void insertUserRoleByUserId(@Param("userId") Long userId,
                         @Param(("roleId")) Long roleId);
+
+    int countUserByRoleId(Long roleId);
 }

@@ -19,15 +19,26 @@
         </where>
         order by id desc
     </select>
-    
+
     <delete id="deleteByUserId">
-    delete from sys_user_role
-    where user_id = #{userId}
+        <!--
+                delete from sys_user_role
+                where user_id = #{userId}
+        -->
+        update sys_user_role
+        set is_deleted = 1, update_time = now()
+        where user_id = #{userId} and is_deleted = 0
     </delete>
-    
+
     <delete id="deleteByUserIdAndRoleId">
-        delete from sys_user_role
+        <!--
+                delete from sys_user_role
+                where user_id = #{userId} and role_id = #{roleId}
+        -->
+        update sys_user_role
+        set is_deleted = 1, update_time = now()
         where user_id = #{userId} and role_id = #{roleId}
+        and is_deleted = 0
     </delete>
 
     <insert id="insertUserRoleByUserId">
@@ -36,4 +47,9 @@
         values
         (#{roleId}, #{userId}, now(), now(), 0)
     </insert>
+
+    <select id="countUserByRoleId">
+        select count(id) from sys_user_role
+        where role_id = #{roleId} and is_deleted = 0
+    </select>
 </mapper>

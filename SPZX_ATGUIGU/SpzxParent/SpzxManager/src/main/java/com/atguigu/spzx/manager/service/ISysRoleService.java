@@ -13,6 +13,6 @@ public interface ISysRoleService {
 
     void updateById(SysRole sysRole);
 
-    void deleteById(Long id);
+    void deleteById(Long roleId);
 
 }
