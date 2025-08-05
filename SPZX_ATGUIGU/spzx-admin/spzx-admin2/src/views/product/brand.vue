@@ -27,7 +27,7 @@
     </el-table-column>
   </el-table>
 
-  <el-dialog v-model="dialogVisible" :header="title" width="30%">
+  <el-dialog v-model="dialogVisible" :title="dialogTitle" width="30%">
     <el-form label-width="120px">
       <el-form-item label="品牌名称">
         <el-input v-model="brand.name" />
@@ -129,7 +129,7 @@ const defaultForm = {
 }
 const brand = ref({ ...defaultForm })
 
-const title = ref('')
+const dialogTitle = ref('')
 
 const headers = {
   // 从pinia中获取token，在进行文件上传的时候将token设置到请求头中
@@ -140,7 +140,7 @@ const dialogVisible = ref(false)
 
 // 显示添加品牌表单
 const addShow = () => {
-  title.value = '添加'
+  dialogTitle.value = '添加'
   dialogVisible.value = true
   // brand.value = {...defaultForm}
 }
@@ -180,7 +180,7 @@ const addBrand = async () => {
 
 //进入修改
 const editShow = row => {
-  title.value = '修改'
+  dialogTitle.value = '修改'
   brand.value = row
   dialogVisible.value = true
 }

@@ -10,6 +10,14 @@ export const GetBrandPageList = (page, limit) => {
   })
 }
 
+// 查询所有的品牌数据
+export const FindAllBrand = () => {
+  return request({
+    url: `${base_url}/findAll`,
+    method: 'get',
+  })
+}
+
 // 保存品牌
 export const AddBrand = brand => {
   return request({

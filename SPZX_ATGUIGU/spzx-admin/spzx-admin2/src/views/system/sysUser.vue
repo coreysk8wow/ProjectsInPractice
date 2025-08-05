@@ -166,7 +166,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref } from 'vue'
 import {
   GetSysUserListByPage,
   AddSysUser,
@@ -258,28 +258,32 @@ const sysUser = ref({ ...defaultForm })
 
 // 控制角色对话框显示状态, 控制对话框是否显示
 const dialogVisible = ref(false)
-const isUpdate = ref(false) // 是否为更新操作
-const isAdd = ref(false) // 是否为添加操作
+// const isUpdate = ref(false) // 是否为更新操作
+// const isAdd = ref(false) // 是否为添加操作
 
-const dialogTitle = computed(() => {
+/* const dialogTitle = computed(() => {
   if (isAdd.value) {
     return '添加'
   } else if (isUpdate.value) {
     return '修改'
   }
   return ''
-})
+}) */
+
+const dialogTitle = ref('')
 
 const addSysUserShow = () => {
   dialogVisible.value = true
-  isAdd.value = true
-  isUpdate.value = false
+  // isAdd.value = true
+  dialogTitle.value = '新增'
+  // isUpdate.value = false
 }
 
 const updateSysUserShow = user => {
   dialogVisible.value = true
-  isAdd.value = false
-  isUpdate.value = true
+  // isAdd.value = false
+  dialogTitle.value = '更新'
+  // isUpdate.value = true
   sysUser.value = { ...user } // 深拷贝，避免直接修改原数据
 }
 

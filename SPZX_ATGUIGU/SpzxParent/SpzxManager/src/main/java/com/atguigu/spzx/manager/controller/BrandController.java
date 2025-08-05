@@ -30,6 +30,13 @@ public class BrandController {
         return Result.build(new PageInfo<>(brandList), ResultCodeEnum.SUCCESS);
     }
 
+    @Operation(summary = "查询所有品牌列表")
+    @GetMapping(value = "/findAll")
+    public Result<List<Brand>> findAll() {
+        List<Brand> brandList = brandService.findAllBrands();
+        return Result.build(brandList, ResultCodeEnum.SUCCESS);
+    }
+
     @Operation(summary = "添加品牌")
     @PostMapping("/add")
     public Result addBrand(@RequestBody Brand brand) {
