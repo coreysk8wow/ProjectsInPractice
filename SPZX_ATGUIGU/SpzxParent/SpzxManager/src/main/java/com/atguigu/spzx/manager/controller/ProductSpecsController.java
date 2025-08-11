@@ -31,6 +31,13 @@ public class ProductSpecsController {
         return Result.build(new PageInfo(productSpecsList), ResultCodeEnum.SUCCESS);
     }
 
+    @Operation(summary = "获取所有商品规格")
+    @GetMapping("/findAll")
+    public Result findAll() {
+        List<ProductSpec> list = productSpecsService.getAllProductSpecs();
+        return Result.build(list, ResultCodeEnum.SUCCESS);
+    }
+
     @Operation(summary = "添加商品规格")
     @PostMapping("/add")
     public Result addProductSpec(@RequestBody ProductSpec productSpec) {

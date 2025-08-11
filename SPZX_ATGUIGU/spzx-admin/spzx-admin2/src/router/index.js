@@ -35,6 +35,7 @@ import home from './modules/home'
 import test from './modules/test'
 import system from './modules/system'
 import product from './modules/product'
+import order from './modules/order'
 
 /* 菜单栏的路由 */
 // 固定菜单
@@ -42,7 +43,7 @@ import product from './modules/product'
 export const fixedRoutes = [...home]
 // 动态菜单
 // export const asyncRoutes = [...test]
-export const asyncRoutes = [...system, ...product]
+export const asyncRoutes = [...system, ...product, ...order]
 
 const router = createRouter({
   history: createWebHashHistory(),

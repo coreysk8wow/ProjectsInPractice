@@ -1,0 +1,9 @@
+package com.atguigu.spzx.common.log.mapper;
+
+import com.atguigu.spzx.model.entity.system.SysOperLog;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface ISysOperLogMapper {
+    void insert(SysOperLog sysOperLog);
+}

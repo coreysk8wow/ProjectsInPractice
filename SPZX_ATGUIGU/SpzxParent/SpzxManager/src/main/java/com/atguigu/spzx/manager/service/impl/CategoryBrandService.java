@@ -2,6 +2,7 @@ package com.atguigu.spzx.manager.service.impl;
 
 import com.atguigu.spzx.manager.mapper.ICategoryBrandMapper;
 import com.atguigu.spzx.manager.service.ICategoryBrandService;
+import com.atguigu.spzx.model.entity.product.Brand;
 import com.atguigu.spzx.model.entity.product.CategoryBrand;
 import com.atguigu.spzx.model.request.product.CategoryBrandReq;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,10 @@ public class CategoryBrandService implements ICategoryBrandService {
     @Override
     public void deleteById(Long id) {
         categoryBrandMapper.deleteById(id);
+    }
+
+    @Override
+    public List<Brand> findBrandByCategoryId(Long categoryId) {
+        return categoryBrandMapper.findBrandByCategoryId(categoryId);
     }
 }

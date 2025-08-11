@@ -12,6 +12,7 @@
         <module>SpzxModel</module>
         <module>SpzxCommon</module>
         <module>SpzxManager</module>
+        <module>SpzxCommon/CommonLog</module>
     </modules>
 
     <parent>

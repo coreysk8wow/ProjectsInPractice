@@ -2,7 +2,8 @@ const Layout = () => import('@/layout/index.vue')
 const category = () => import('@/views/product/category.vue')
 const brand = () => import('@/views/product/brand.vue')
 const categoryBrand = () => import('@/views/product/categoryBrand.vue')
-const productSpec = () => import('@/views/product/productSpec.vue')
+const productSpecs = () => import('@/views/product/productSpecs.vue')
+const product = () => import('@/views/product/product.vue')
 
 export default [
   {
@@ -35,15 +36,23 @@ export default [
         name: 'categoryBrand',
         component: categoryBrand,
         meta: {
-          title: '分类品牌管理',
+          title: '分类品牌关系',
         },
       },
       {
-        path: '/productSpec',
+        path: '/productSpecs',
         name: 'productSpec',
-        component: productSpec,
+        component: productSpecs,
         meta: {
-          title: '商品规格管理',
+          title: '商品规格',
+        },
+      },
+      {
+        path: '/product',
+        name: 'productList',
+        component: product,
+        meta: {
+          title: '商品列表',
         },
       },
     ],

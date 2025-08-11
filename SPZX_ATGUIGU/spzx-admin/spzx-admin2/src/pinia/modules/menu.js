@@ -133,6 +133,7 @@ export const useMenus = defineStore('menu', () => {
         router.removeRoute(item.name)
       })
       console.log('asyncRoutes after remove {}', asyncRoutes)
+      console.log('data after remove {}', data)
 
       // 过滤出需要添加的动态路由
       const filterRoutes = getFilterRoutes(asyncRoutes, data)

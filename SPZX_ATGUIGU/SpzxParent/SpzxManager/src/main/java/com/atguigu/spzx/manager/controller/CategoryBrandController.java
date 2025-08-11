@@ -1,6 +1,7 @@
 package com.atguigu.spzx.manager.controller;
 
 import com.atguigu.spzx.manager.service.ICategoryBrandService;
+import com.atguigu.spzx.model.entity.product.Brand;
 import com.atguigu.spzx.model.entity.product.CategoryBrand;
 import com.atguigu.spzx.model.request.product.CategoryBrandReq;
 import com.atguigu.spzx.model.response.common.Result;
@@ -47,7 +48,7 @@ public class CategoryBrandController {
     @PutMapping("/updateById")
     public Result updateById(@RequestBody CategoryBrand categoryBrand) {
         categoryBrandService.updateById(categoryBrand);
-        return Result.build(null , ResultCodeEnum.SUCCESS) ;
+        return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 
     @Operation(summary = "逻辑删除分类品牌接口")
@@ -55,5 +56,17 @@ public class CategoryBrandController {
     public Result deleteById(@PathVariable Long id) {
         categoryBrandService.deleteById(id);
         return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+
+    /**
+     * 加载品牌数据
+     * @param categoryId
+     * @return
+     */
+    @Operation(summary = "根据第三级分类的ID查询品牌接口")
+    @GetMapping("/findBrandByCategoryId/{categoryId}")
+    public Result<Brand> findBrandByCategoryId(@PathVariable Long categoryId) {
+        List<Brand> brandList = categoryBrandService.findBrandByCategoryId(categoryId);
+        return Result.build(brandList, ResultCodeEnum.SUCCESS);
     }
 }

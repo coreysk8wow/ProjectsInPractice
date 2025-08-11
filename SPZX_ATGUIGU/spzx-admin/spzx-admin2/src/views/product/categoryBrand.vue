@@ -117,6 +117,7 @@ const props = {
   value: 'id',
   label: 'name',
   leaf: 'leaf',
+  checkStrictly: false,
   async lazyLoad(node, resolve) {
     // 加载数据的方法
     if (typeof node.value == 'undefined') node.value = 0

@@ -4,6 +4,7 @@
 
     <resultMap id="categoryBrandMap" type="com.atguigu.spzx.model.entity.product.CategoryBrand" autoMapping="true">
     </resultMap>
+    <resultMap id="brandMap" type="com.atguigu.spzx.model.entity.product.Brand" autoMapping="true"></resultMap>
 
     <!-- 用于select查询公用抽取的列 -->
     <sql id="columns">
@@ -60,4 +61,16 @@
         update_time = now()
         where id = #{id}
     </update>
+
+
+<!--     商品管理-->
+    <select id="findBrandByCategoryId" resultMap="brandMap">
+        select
+        b.id, b.name, b.logo, b.create_time, b.update_time, b.is_deleted
+        from category_brand cb
+        inner join brand b  on b.id = cb.brand_id
+        where cb.category_id = #{categoryId}
+        and cb.is_deleted = 0 and b.is_deleted = 0
+        order by b.id desc
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.atguigu.spzx.manager.mapper;
 
+import com.atguigu.spzx.model.entity.product.Brand;
 import com.atguigu.spzx.model.entity.product.CategoryBrand;
 import com.atguigu.spzx.model.request.product.CategoryBrandReq;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,4 +17,8 @@ public interface ICategoryBrandMapper {
 
     // 逻辑删除
     void deleteById(Long id);
+
+    // 商品管理
+    List<Brand> findBrandByCategoryId(Long categoryId);
+
 }

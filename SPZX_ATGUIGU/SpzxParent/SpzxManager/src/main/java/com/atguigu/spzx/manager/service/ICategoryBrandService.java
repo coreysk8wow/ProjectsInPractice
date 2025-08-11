@@ -1,5 +1,6 @@
 package com.atguigu.spzx.manager.service;
 
+import com.atguigu.spzx.model.entity.product.Brand;
 import com.atguigu.spzx.model.entity.product.CategoryBrand;
 import com.atguigu.spzx.model.request.product.CategoryBrandReq;
 
@@ -14,4 +15,6 @@ public interface ICategoryBrandService {
 
     // 逻辑删除
     void deleteById(Long id);
+
+    List<Brand> findBrandByCategoryId(Long categoryId);
 }

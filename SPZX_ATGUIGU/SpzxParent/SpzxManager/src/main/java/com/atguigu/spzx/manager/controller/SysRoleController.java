@@ -1,5 +1,6 @@
 package com.atguigu.spzx.manager.controller;
 
+import com.atguigu.spzx.common.log.annotation.Log;
 import com.atguigu.spzx.manager.service.ISysRoleMenuService;
 import com.atguigu.spzx.manager.service.ISysRoleService;
 import com.atguigu.spzx.model.entity.system.SysRole;
@@ -45,11 +46,14 @@ public class SysRoleController {
         return Result.build(rolePageInfo, ResultCodeEnum.SUCCESS);
     }
 
+    @Log(title = "添加角色", businessType = 1)
     @Operation(summary = "保存角色接口")
     @PostMapping(value = "/save")
     public Result save(@RequestBody SysRole sysRole) {
+        log.debug("ENTER SysRoleController.save()");
         sysRoleService.save(sysRole);
         log.debug("保存角色信息: {}", sysRole);
+        log.debug("EXIT SysRoleController.save()");
         return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 
@@ -61,6 +65,7 @@ public class SysRoleController {
         return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 
+    @Log(title = "根据角色ID删除角色", businessType = 3)
     @Operation(summary = "根据角色ID删除角色接口")
     @DeleteMapping(value = "/deleteById/{id}")
     public Result deleteById(@PathVariable Long id) {

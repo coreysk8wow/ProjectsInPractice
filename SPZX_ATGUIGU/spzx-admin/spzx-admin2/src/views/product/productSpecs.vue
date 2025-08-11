@@ -92,9 +92,9 @@ import { ref, onMounted } from 'vue'
 import {
   DeleteProductSpecById,
   GetProductSpecPageList,
-  SaveProductSpec,
+  AddProductSpec,
   UpdateProductSpecById,
-} from '@/api/productSpec.js'
+} from '@/api/productSpecs.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 // 表格数据模型
@@ -227,7 +227,7 @@ const add = async () => {
   console.log(productSpecClone)
 
   // 提交表单
-  await SaveProductSpec(productSpecClone)
+  await AddProductSpec(productSpecClone)
   fetchData()
   ElMessage.success('操作成功')
 }

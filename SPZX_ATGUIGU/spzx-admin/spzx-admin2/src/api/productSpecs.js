@@ -11,7 +11,7 @@ export const GetProductSpecPageList = (page, limit) => {
 }
 
 // 保存信息
-export const SaveProductSpec = productSpec => {
+export const AddProductSpec = productSpec => {
   return request({
     url: `${base_url}/add`,
     method: 'post',
@@ -33,5 +33,13 @@ export const DeleteProductSpecById = id => {
   return request({
     url: `${base_url}/deleteById/${id}`,
     method: 'delete',
+  })
+}
+
+// 查询所有的产品规格数据
+export const FindAllProductSpecs = () => {
+  return request({
+    url: `${base_url}/findAll`,
+    method: 'get',
   })
 }
