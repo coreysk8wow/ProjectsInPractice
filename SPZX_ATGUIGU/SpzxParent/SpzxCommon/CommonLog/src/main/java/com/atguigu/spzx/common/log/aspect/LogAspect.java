@@ -2,7 +2,7 @@ package com.atguigu.spzx.common.log.aspect;
 
 import com.atguigu.spzx.common.exception.GuiguException;
 import com.atguigu.spzx.common.log.annotation.Log;
-import com.atguigu.spzx.common.log.service.IAsyncOperLogService;
+import com.atguigu.spzx.common.log.service.IOperLogService;
 import com.atguigu.spzx.common.log.utils.LogUtil;
 import com.atguigu.spzx.model.entity.system.SysOperLog;
 import com.atguigu.spzx.model.response.common.ResultCodeEnum;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 public class LogAspect {
 
     @Autowired
-    private IAsyncOperLogService asyncOperLogService;
+    private IOperLogService operLogService;
 
     @Around(value = "@annotation(sysLog)")
     public Object logAround(ProceedingJoinPoint joinPoint, Log sysLog) throws Throwable {
@@ -39,7 +39,7 @@ public class LogAspect {
             throw new GuiguException(ResultCodeEnum.SYSTEM_ERROR);
         }
 
-        asyncOperLogService.saveSysOperLog(sysOperLog);
+        operLogService.saveSysOperLog(sysOperLog);
 
         return result;
     }

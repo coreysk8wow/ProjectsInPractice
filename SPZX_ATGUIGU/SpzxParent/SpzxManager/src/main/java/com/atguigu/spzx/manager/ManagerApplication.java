@@ -15,7 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 // SpringBoot默认扫描启动类所在包，及其子包中的配置类，使用@ComponentScan可以修改。
 @ComponentScan(basePackages = "com.atguigu.spzx")
-@MapperScan(basePackages = {"com.atguigu.spzx.manager.mapper", "com.atguigu.spzx.common.log.mapper"})
+//@MapperScan(basePackages = {"com.atguigu.spzx.manager.mapper", "com.atguigu.spzx.common.log.mapper"})
 @EnableConfigurationProperties(value = {UserAuthProperties.class, MinioProperties.class})
 public class ManagerApplication {
     public static void main(String[] args) {
