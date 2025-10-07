@@ -27,7 +27,11 @@ import {
 	ISysRoleReq,
 	IAssignMenuReq,
 } from "@/model/request/interfaces/system-req-intf";
-import { TRolesAndUserObj, ILoginResp, TMenusAndRoleObj } from "@/model/response/interfaces/system-resp-intf";
+import {
+	TRolesAndUserObj,
+	ILoginResp,
+	TMenusAndRoleObj,
+} from "@/model/response/interfaces/system-resp-intf";
 import { redisClient } from "@/utils/redis-util";
 import { v4 as uuidv4 } from "uuid";
 import { CODEKEY_PREFIX, LOGIN_TOKEN_PREFIX } from "@/constants/redis-constants";
@@ -245,8 +249,8 @@ export class SysUserServiceImpl implements ISysUserService {
 			throw GuiguException.fromEnum(ResultCodeEnum.USERNAME_CHANGING_FORBIDDEN);
 		}
 
-        // 修改用户信息菜单李不修改密码，改密码走专门流程。
-        sysUser.password = undefined;
+		// 修改用户信息菜单李不修改密码，改密码走专门流程。
+		sysUser.password = undefined;
 
 		// 插入新用户
 		const userToUpdate = {
@@ -326,7 +330,8 @@ export class SysUserServiceImpl implements ISysUserService {
 			if (onlyInOld.length > 0) {
 				// 如果有删除的角色ID，则从sys_user_role表中删除
 				for (const roleId of onlyInOld) {
-					await tx.update(sysUserRoleTbl)
+					await tx
+						.update(sysUserRoleTbl)
 						.set({ isDeleted: 1, updateTime: new Date() })
 						.where(
 							and(
@@ -467,7 +472,14 @@ export class SysMenuServiceImpl implements ISysMenuService {
 			.from(sysMenuTbl)
 			.innerJoin(sysRoleMenuTbl, eq(sysMenuTbl.id, sysRoleMenuTbl.menuId))
 			.innerJoin(sysUserRoleTbl, eq(sysRoleMenuTbl.roleId, sysUserRoleTbl.roleId))
-			.where(eq(sysUserRoleTbl.userId, userId));
+			.where(
+				and(
+					eq(sysUserRoleTbl.userId, userId),
+					eq(sysMenuTbl.isDeleted, 0),
+					eq(sysRoleMenuTbl.isDeleted, 0),
+					eq(sysUserRoleTbl.isDeleted, 0)
+				)
+			);
 
 		const menuList: ISysMenu[] = menus.map((m) => ({
 			...m,
@@ -588,9 +600,9 @@ export class SysRoleMenuServiceImpl implements ISysRoleMenuService {
 		const roleMenuIdList: number[] = dbResult.map((r) => r.mId);
 
 		return {
-            menuTreeList: menuTree,
-            roleMenuIdList: roleMenuIdList
-        } as TMenusAndRoleObj;
+			menuTreeList: menuTree,
+			roleMenuIdList: roleMenuIdList,
+		} as TMenusAndRoleObj;
 	}
 
 	// Transactional
@@ -654,13 +666,13 @@ export class SysUserRoleServiceImpl implements ISysUserRoleService {
 				.orderBy(desc(sysUserRoleTbl.id))
 		).map((r) => r.roleId);
 
-/* 		const resultMap: Map<string, object> = new Map<string, object>();
+		/* 		const resultMap: Map<string, object> = new Map<string, object>();
 		resultMap.set("allRolesList", allRoles);
 		resultMap.set("userRoleIdList", userRoleIdList); */
 
-        return {
-            allRolesList: allRoles,
-            userRoleIdList: userRoleIdList
-        } as TRolesAndUserObj;
+		return {
+			allRolesList: allRoles,
+			userRoleIdList: userRoleIdList,
+		} as TRolesAndUserObj;
 	}
 }
