@@ -119,34 +119,12 @@ export const useMenus = defineStore('menu', () => {
   }
   const generateMenus = async () => {
     // 方式一：只有固定菜单
-    /*     const menus = getFilterMenus(fixedRoutes)
-    setMenus(menus) */
+    const menus = getFilterMenus(fixedRoutes)
+    setMenus(menus)
 
     // 方式二：有动态菜单
     // 从后台获取菜单
-    const { code, data } = await GetMenusByUser()
-
-    if (+code === 200) {
-      console.log('asyncRoutes before remove {}', asyncRoutes)
-      // 添加路由之前先删除所有动态路由
-      asyncRoutes.forEach(item => {
-        router.removeRoute(item.name)
-      })
-      console.log('asyncRoutes after remove {}', asyncRoutes)
-      console.log('data after remove {}', data)
-
-      // 过滤出需要添加的动态路由
-      const filterRoutes = getFilterRoutes(asyncRoutes, data)
-      console.log('filterRoutes {}', filterRoutes)
-
-      // 生成菜单
-      const menus = getFilterMenus([...fixedRoutes, ...filterRoutes])
-      setMenus(menus)
-
-      // 添加动态路由，由于只做了二级路由，所以需要将三级之后的children提到二级
-      const arr = formatRoutes(filterRoutes)
-      arr.forEach(route => router.addRoute(route))
-    }
+    // await generateDynamicMenus();
   }
   return {
     menus,
@@ -154,3 +132,30 @@ export const useMenus = defineStore('menu', () => {
     generateMenus,
   }
 })
+
+// generate dynamic menus
+async function generateDynamicMenus() {
+  const { code, data } = await GetMenusByUser()
+
+  if (+code === 200) {
+    console.log('asyncRoutes before remove {}', asyncRoutes)
+    // 添加路由之前先删除所有动态路由
+    asyncRoutes.forEach(item => {
+      router.removeRoute(item.name)
+    })
+    console.log('asyncRoutes after remove {}', asyncRoutes)
+    console.log('data after remove {}', data)
+
+    // 过滤出需要添加的动态路由
+    const filterRoutes = getFilterRoutes(asyncRoutes, data)
+    console.log('filterRoutes {}', filterRoutes)
+
+    // 生成菜单
+    const menus = getFilterMenus([...fixedRoutes, ...filterRoutes])
+    setMenus(menus)
+
+    // 添加动态路由，由于只做了二级路由，所以需要将三级之后的children提到二级
+    const arr = formatRoutes(filterRoutes)
+    arr.forEach(route => router.addRoute(route))
+  }
+}

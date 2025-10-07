@@ -1,0 +1,12 @@
+{
+  "watch": ["src"],
+  "ignore": ["drizzle", "node_modules", "dist"],
+  "exec": "tsx --inspect src/bin/www", 
+  "ext": "ts,js,json",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "verbose": true,
+  "restartable": "rs",
+  "delay": 1000
+}

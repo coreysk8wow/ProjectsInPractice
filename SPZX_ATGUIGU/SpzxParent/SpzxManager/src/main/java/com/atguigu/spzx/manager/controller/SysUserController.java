@@ -69,6 +69,8 @@ public class SysUserController {
     @GetMapping(value = "/findAllRoles/{userId}")
     public Result<Map<String , Object>> findAllRoles(@PathVariable(value = "userId") Long userId) {
         Map<String, Object> resultMap = sysUserRoleService.findAllRoles(userId);
+
+        System.out.println(resultMap);
         return Result.build(resultMap , ResultCodeEnum.SUCCESS)  ;
     }
 

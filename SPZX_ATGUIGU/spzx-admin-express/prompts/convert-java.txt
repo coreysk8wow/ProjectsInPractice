@@ -1,0 +1,6 @@
+
+转换JAVA model类
+convert to ts, use schema as comment, use // for field level comment, use /** */ for class level comment
+
+
+To generate an image with an alphabet and number validation code in Node.js

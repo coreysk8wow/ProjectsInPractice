@@ -1,0 +1,27 @@
+{
+	"compilerOptions": {
+		"target": "es2024",
+		"module": "es2022", // By default, it's CommonJS
+		"moduleResolution": "node",
+		"outDir": "./dist", // Compiled files to dist/
+		"rootDir": "./src", // All TS files under src/
+		"baseUrl": ".", // For absolute imports @/src/
+		"paths": {
+			// Path mapping
+			"@/*": ["./src/*"]
+		},
+		"strict": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"declaration": true,
+		"declarationMap": true,
+		"sourceMap": true,
+		"allowJs": true,
+		"emitDecoratorMetadata": true, // for TypeDI @Service()
+		"experimentalDecorators": true // for TypeDI @Service()
+	},
+	"include": ["src/**/*", "test-drizzle/index-test-drizzle.ts"],
+	"exclude": ["node_modules", "dist", "drizzle"]
+}
