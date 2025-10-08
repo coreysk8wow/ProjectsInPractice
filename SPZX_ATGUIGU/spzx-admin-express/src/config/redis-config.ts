@@ -1,3 +1,8 @@
+/**
+ * The Redis connection is created when the module is first imported, 
+ * not when a Redis operation is performed.
+ */
+
 import { config } from 'dotenv';
 import redis from 'redis';
 

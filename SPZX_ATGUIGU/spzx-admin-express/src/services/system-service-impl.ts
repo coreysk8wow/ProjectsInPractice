@@ -1,49 +1,46 @@
-import { config } from "dotenv";
-import { drizzle } from "drizzle-orm/mysql2";
-import { eq, asc, count, and, desc, gte, lte, like } from "drizzle-orm";
-import { Nullable } from "@/types/basic-type";
+import { redisClient } from "@/config/redis-config";
+import { CODEKEY_PREFIX, LOGIN_TOKEN_PREFIX } from "@/constants/redis-constants";
 import {
-	sysUser as sysUserTbl,
-	sysUserRole as sysUserRoleTbl,
-	sysRole as sysRoleTbl,
-	sysRoleMenu as sysRoleMenuTbl,
-	sysMenu as sysMenuTbl,
+    sysMenu as sysMenuTbl,
+    sysRoleMenu as sysRoleMenuTbl,
+    sysRole as sysRoleTbl,
+    sysUserRole as sysUserRoleTbl,
+    sysUser as sysUserTbl,
 } from "@/db/schema";
+import { GuiguException } from "@/exceptions/custom-exception";
 import { ISysMenu, ISysRole, ISysUser } from "@/model/entity/interfaces/system-entity-intf";
 import {
-	ISysMenuService,
-	ISysRoleMenuService,
-	ISysRoleService,
-	ISysUserRoleService,
-	ISysUserService,
-} from "./interfaces/system-service-intf";
-import { GuiguException } from "@/exceptions/custom-exception";
-import { PageInfo, ResultCodeEnum } from "@/model/response/common-resp";
-import { generateMD5Hash } from "@/utils/encryption-util";
-import {
-	ILoginReq,
-	ISysUserReq,
-	IAssignRoleReq,
-	ISysRoleReq,
-	IAssignMenuReq,
+    IAssignMenuReq,
+    IAssignRoleReq,
+    ILoginReq,
+    ISysRoleReq,
+    ISysUserReq,
 } from "@/model/request/interfaces/system-req-intf";
+import { PageInfo, ResultCodeEnum } from "@/model/response/common-resp";
 import {
-	TRolesAndUserObj,
-	ILoginResp,
-	TMenusAndRoleObj,
+    ILoginResp,
+    TMenusAndRoleObj,
+    TRolesAndUserObj,
 } from "@/model/response/interfaces/system-resp-intf";
-import { redisClient } from "@/utils/redis-util";
-import { v4 as uuidv4 } from "uuid";
-import { CODEKEY_PREFIX, LOGIN_TOKEN_PREFIX } from "@/constants/redis-constants";
-import { Service } from "typedi";
+import { Nullable } from "@/types/basic-type";
+import { generateMD5Hash } from "@/utils/encryption-util";
 import { MenuHelper } from "@/utils/menu-util";
-import { Container as IoC } from "typedi";
+import { config } from "dotenv";
+import { and, asc, count, desc, eq, gte, like, lte } from "drizzle-orm";
+import { Container as IoC, Service } from "typedi";
+import { v4 as uuidv4 } from "uuid";
+import {
+    ISysMenuService,
+    ISysRoleMenuService,
+    ISysRoleService,
+    ISysUserRoleService,
+    ISysUserService,
+} from "./interfaces/system-service-intf";
+import { db } from "@/config/db-config";
+
 
 // Specify custom .env path
 config({ path: ".env" });
-
-const db = drizzle(process.env.DATABASE_URL!, { logger: true });
-console.log("Database connected with URL:", process.env.DATABASE_URL);
 
 const sysUserCols = {
 	id: sysUserTbl.id,
@@ -238,8 +235,9 @@ export class SysUserServiceImpl implements ISysUserService {
 	}
 
 	async updateUserById(sysUser: Partial<ISysUser>): Promise<void> {
-		if (sysUser.id === null || sysUser.id === undefined)
+		if (sysUser.id === null || sysUser.id === undefined) {
 			throw GuiguException.fromEnum(ResultCodeEnum.SYSTEM_ERROR);
+        }
 
 		// 检查用户是否已存在
 		const existingUser = await this.findById(sysUser.id);

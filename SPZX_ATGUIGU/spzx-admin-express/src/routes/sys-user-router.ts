@@ -1,25 +1,18 @@
-import { GuiguException } from "@/exceptions/custom-exception";
-import { ISysRole, ISysUser } from "@/model/entity/interfaces/system-entity-intf";
-import { SysRole } from "@/model/entity/system-entity";
+import { ISysUser } from "@/model/entity/interfaces/system-entity-intf";
+import { IAssignRoleReq, ISysUserReq } from "@/model/request/interfaces/system-req-intf";
 import { PageInfo, Result, ResultCodeEnum } from "@/model/response/common-resp";
+import { TRolesAndUserObj } from "@/model/response/interfaces/system-resp-intf";
 import {
-	ISysRoleMenuService,
-	ISysRoleService,
-	ISysUserRoleService,
-	ISysUserService,
+    ISysUserRoleService,
+    ISysUserService
 } from "@/services/interfaces/system-service-intf";
 import {
-	SysRoleMenuServiceImpl,
-	SysRoleServiceImpl,
-	SysUserRoleServiceImpl,
-	SysUserServiceImpl,
+    SysUserRoleServiceImpl,
+    SysUserServiceImpl
 } from "@/services/system-service-impl";
 import { Nullable } from "@/types/basic-type";
 import express from "express";
 import { Container as IoC } from "typedi";
-import { IAssignRoleReq, ISysRoleReq, ISysUserReq } from "@/model/request/interfaces/system-req-intf";
-import { sysRole, sysUserRole } from "@/db/schema";
-import { TRolesAndUserObj } from "@/model/response/interfaces/system-resp-intf";
 
 export const userRouter = express.Router();
 const sysUserService: ISysUserService = IoC.get(SysUserServiceImpl);

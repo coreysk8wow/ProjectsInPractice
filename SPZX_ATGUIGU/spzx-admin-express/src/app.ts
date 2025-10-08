@@ -1,10 +1,10 @@
-import 'reflect-metadata'; // typeDI 需要
-import express from 'express';
-import path from 'path';
-import cookieParser from 'cookie-parser';
-import logger from 'morgan';
-import { fileURLToPath } from 'url';
 import cors from 'cors';
+import { config } from "dotenv";
+import express from 'express';
+import logger from 'morgan';
+import path from 'path';
+import 'reflect-metadata'; // typeDI 需要
+import { fileURLToPath } from 'url';
 
 // import indexRouterDemo from './routes/demo/index-demo';
 // import usersRouterDemo from './routes/demo/users-demo';
@@ -12,15 +12,11 @@ import cors from 'cors';
 import { indexRouter } from './routes/index-router';
 import { menuRouter } from './routes/sys-menu-router';
 import { roleRouter } from './routes/sys-role-router';
+import { userRouter } from './routes/sys-user-router';
+import { uploadRouter } from './routes/file-upload-router';
 
 import { globalErrorHandlingMW, loginAuthenticationMW } from './middlewares/common-middleware';
 
-/**
- * The Redis connection is created when the module is first imported, 
- * not when a Redis operation is performed.
- */
-import { client } from './utils/redis-util';
-import { userRouter } from './routes/sys-user-router';
 
 const app = express();
 export default app;
@@ -29,10 +25,14 @@ export default app;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Specify custom .env path
+config({ path: ".env" });
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Add CORS middleware - place this before your routes
@@ -94,5 +94,9 @@ app.use('/admin/system/sysRole', roleRouter);
 // 用户接口
 app.use('/admin/system/sysUser', userRouter);
 
+// 文件上传接口
+app.use('/admin/system', uploadRouter);
+
 
 app.use(globalErrorHandlingMW);
+
