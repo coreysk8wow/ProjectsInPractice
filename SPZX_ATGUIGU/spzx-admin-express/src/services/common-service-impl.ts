@@ -1,5 +1,5 @@
 import { GuiguException } from "@/exceptions/custom-exception";
-import { redisClient } from "@/utils/redis-util";
+import { redisClient } from "@/config/redis-config";
 import svgCaptcha from "svg-captcha";
 import { IValidateCodeResp } from "@/model/response/interfaces/system-resp-intf";
 import { v4 as uuidv4 } from "uuid";
