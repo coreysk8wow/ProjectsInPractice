@@ -1,0 +1,16 @@
+Luxon.js : 处理日期， Choose Luxon if you require robust, built-in time zone handling, prefer immutable objects, and need a comprehensive feature set without relying on plugins.
+
+node-cron : 任务调度
+
+big.js : 处理大数字，
+
+multer : 处理文件上传类似JAVA的MultipartFile
+
+cors : 跨于请求ExpressJS中间件
+
+dotenv : .env配置文件
+
+typedi : IoC container
+
+uuid : 生成uuid
+

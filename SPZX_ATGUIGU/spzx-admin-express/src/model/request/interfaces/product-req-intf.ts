@@ -12,7 +12,7 @@ export interface ICategoryBrandReq {
 /**
  * 商品搜索条件实体类
  */
-export interface IProductReq extends IBaseEntity {
+export interface IProductReq {
     brandId: Nullable<number>; // 品牌id
     category1Id: Nullable<number>; // 一级分类id
     category2Id: Nullable<number>; // 二级分类id

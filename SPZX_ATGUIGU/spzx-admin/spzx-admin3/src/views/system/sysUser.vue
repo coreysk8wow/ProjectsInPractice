@@ -97,15 +97,7 @@
       {{ scope.row.status == 1 ? '正常' : '停用' }}
     </el-table-column>
     <el-table-column prop="createTime" label="创建时间" #default="scope">
-      {{ new Date(scope.row.createTime).toLocaleString('zh-CN', { 
-        year: 'numeric', 
-        month: '2-digit', 
-        day: '2-digit', 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit',
-        hour12: false 
-      }).replace(/\//g, '-') }}
+        {{ formatDateTime(scope.row.createTime) }}
     </el-table-column>
     <el-table-column label="操作" align="center" width="280">
       <template v-slot:default="scope">
@@ -187,6 +179,7 @@ import {
 } from '@/api/sysUser'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useApp } from '@/pinia/modules/app'
+import {formatDateTime} from '@/utils/date-util.js'
 
 // 表格数据模型
 const list = ref([])

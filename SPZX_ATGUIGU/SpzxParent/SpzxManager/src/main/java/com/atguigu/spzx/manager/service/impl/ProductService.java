@@ -66,6 +66,7 @@ public class ProductService implements IProductService {
         productDetailsMapper.insert(productDetails);
     }
 
+    // 错了。参考NodeJS版。
     @Override
     public Product getProductById(Long id) {
         ProductReq productReq = new ProductReq();

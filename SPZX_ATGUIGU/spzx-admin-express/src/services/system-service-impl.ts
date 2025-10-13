@@ -1,3 +1,4 @@
+import { db } from "@/config/db-config";
 import { redisClient } from "@/config/redis-config";
 import { CODEKEY_PREFIX, LOGIN_TOKEN_PREFIX } from "@/constants/redis-constants";
 import {
@@ -36,7 +37,6 @@ import {
     ISysUserRoleService,
     ISysUserService,
 } from "./interfaces/system-service-intf";
-import { db } from "@/config/db-config";
 
 
 // Specify custom .env path
@@ -222,16 +222,22 @@ export class SysUserServiceImpl implements ISysUserService {
 			throw GuiguException.fromEnum(ResultCodeEnum.USER_NAME_IS_EXISTS);
 		}
 
-		// 对密码进行MD5加密
+        // 对密码进行MD5加密
 		const pwdDigest = generateMD5Hash(sysUser.password);
-		sysUser.password = pwdDigest;
 
-		const now = new Date();
-		sysUser.createTime = now;
-		sysUser.updateTime = now;
-		sysUser.id = undefined;
+        const now = new Date();
+
+        const userToInsert = {
+            ...sysUser,
+            username: sysUser.userName,
+            password: pwdDigest,
+            id: undefined, // let the database auto-generate the ID
+            createTime: now,
+		    updateTime: now,
+        }
+
 		// 插入新用户
-		await db.insert(sysUserTbl).values(sysUser as any);
+		await db.insert(sysUserTbl).values(userToInsert);
 	}
 
 	async updateUserById(sysUser: Partial<ISysUser>): Promise<void> {
@@ -255,10 +261,11 @@ export class SysUserServiceImpl implements ISysUserService {
 			...sysUser,
 			createTime: undefined,
 			updateTime: new Date(),
+            id: sysUser.id
 		};
 		await db
 			.update(sysUserTbl)
-			.set(userToUpdate as any)
+			.set(userToUpdate)
 			.where(eq(sysUserTbl.id, sysUser.id));
 	}
 
@@ -420,11 +427,12 @@ export class SysMenuServiceImpl implements ISysMenuService {
 			...sysMenu,
 			createTime: undefined,
 			updateTime: new Date(),
+            id: sysMenu.id
 		};
 
 		await db
 			.update(sysMenuTbl)
-			.set(menuToUpdate as any)
+			.set(menuToUpdate)
 			.where(and(eq(sysMenuTbl.id, sysMenu.id), eq(sysMenuTbl.isDeleted, 0)));
 	}
 
@@ -543,13 +551,14 @@ export class SysRoleServiceImpl implements ISysRoleService {
 
 		const roleToUpdate = {
 			...sysRole,
+            id: sysRole.id,
 			createTime: undefined,
 			updateTime: new Date(),
 		};
 
 		await db
 			.update(sysRoleTbl)
-			.set(roleToUpdate as any)
+			.set(roleToUpdate)
 			.where(eq(sysRoleTbl.id, sysRole.id));
 	}
 
@@ -609,7 +618,7 @@ export class SysRoleMenuServiceImpl implements ISysRoleMenuService {
 			throw GuiguException.fromEnum(ResultCodeEnum.SYSTEM_ERROR);
 		}
 
-		db.transaction(async (tx) => {
+		await db.transaction(async (tx) => {
 			await tx.delete(sysRoleMenuTbl).where(eq(sysRoleMenuTbl.roleId, assignMenuReq.roleId));
 			const menuIdList = assignMenuReq.menuIdList;
 			if (menuIdList !== null && menuIdList !== undefined && menuIdList.length > 0) {

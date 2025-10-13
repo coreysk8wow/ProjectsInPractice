@@ -85,13 +85,15 @@ export function globalErrorHandlingMW(err: any, req: any, res: any, next: any) {
 
 		// Handle custom GuiguException
 		if (err.name === "GuiguException") {
+            console.error('Caught GuiguException:', err);
 			return res.status(err.code).json(Result.build(err.code, err.message));
 		}
 
 		// Handle other errors
+        console.error('Caught unknown exception:', err);
 		return res
 			.status(ResultCodeEnum.SYSTEM_ERROR.code)
-			.json(Result.buildFromEnum(ResultCodeEnum.SYSTEM_ERROR, "Internal server error"));
+			.json(Result.buildFromEnum(ResultCodeEnum.SYSTEM_ERROR, err.message));
 	} catch (error) {
 		next(error);
 	}
