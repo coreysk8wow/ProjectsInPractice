@@ -44,15 +44,7 @@
       <el-table-column prop="roleName" label="角色名称" width="180" />
       <el-table-column prop="roleCode" label="角色code" width="180" />
       <el-table-column prop="createTime" label="创建时间" #default="scope">
-        {{ new Date(scope.row.createTime).toLocaleString('zh-CN', { 
-            year: 'numeric', 
-            month: '2-digit', 
-            day: '2-digit', 
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit',
-            hour12: false 
-        }).replace(/\//g, '-') }}
+        {{ formatDateTime(scope.row.createTime) }}
       </el-table-column>
       <el-table-column label="操作" align="center" width="280">
         <template #default="scope">
@@ -126,6 +118,7 @@ import {
   AssignMenuToRole,
 } from '@/api/sysRole'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { formatDateTime } from '@/utils/date-util.js'
 
 // 分页条总记录数
 let total = ref(0)

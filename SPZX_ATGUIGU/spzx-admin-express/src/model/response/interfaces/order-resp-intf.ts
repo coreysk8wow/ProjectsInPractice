@@ -1,6 +1,7 @@
 import { Nullable } from "@/types/basic-type";
+import { Big } from "big.js";
 
 export interface IOrderStatisticsResp {
-    dateList: Nullable<string[]>;
-    amountList: Nullable<number[]>;
+    dateList: string[];
+    amountList: Big[];
 }

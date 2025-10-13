@@ -1,5 +1,6 @@
 import { Nullable } from '@/types/basic-type.js';
 import { IBaseEntity } from './baseEntity-intf';
+import { Big } from 'big.js';
 
 /** OrderInfo */
 export interface IOrderInfo extends IBaseEntity {
@@ -115,6 +116,6 @@ export interface IOrderLog extends IBaseEntity {
 /** 订单统计实体类 */
 export interface IOrderStatistics extends IBaseEntity {
     orderDate: Nullable<Date>;
-    totalAmount: Nullable<number>;
+    totalAmount: Nullable<string>;
     totalNum: Nullable<number>;
 }

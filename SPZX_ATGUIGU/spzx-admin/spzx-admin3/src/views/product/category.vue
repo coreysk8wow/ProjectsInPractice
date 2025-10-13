@@ -15,7 +15,9 @@
         <el-table-column prop="status" label="状态" #default="scope">
             {{ scope.row.status == 1 ? '正常' : '停用' }}
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" />
+        <el-table-column prop="createTime" label="创建时间" #default="scope">
+            {{ formatDateTime(scope.row.createTime) }}
+        </el-table-column>
     </el-table>
 
     <el-dialog v-model="dialogImportVisible" title="导入" width="30%">
@@ -35,6 +37,7 @@ import { onMounted, ref } from 'vue'
 import { FindCategoryByParentId, ExportCategoryData } from '@/api/category.js'
 import { ElMessage } from 'element-plus'
 import { useApp } from '@/pinia/modules/app'
+import { formatDateTime } from '@/utils/date-util.js'
 
 // 定义list属性模型
 const list = ref([])

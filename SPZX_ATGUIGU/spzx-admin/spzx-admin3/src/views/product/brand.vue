@@ -10,7 +10,9 @@
                 <img :src="scope.row.logo" width="50" />
             </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" />
+        <el-table-column prop="createTime" label="创建时间" #default="scope" >
+            {{ formatDateTime(scope.row.createTime) }}
+        </el-table-column>
         <el-table-column label="操作" align="center" width="200">
             <template v-slot:default="scope">
                 <el-button type="primary" size="small" @click="editShow(scope.row)">
@@ -59,6 +61,7 @@ import {
 } from '@/api/brand.js'
 import { useApp } from '@/pinia/modules/app'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { formatDateTime } from '@/utils/date-util.js'
 
 const list = ref([])
 

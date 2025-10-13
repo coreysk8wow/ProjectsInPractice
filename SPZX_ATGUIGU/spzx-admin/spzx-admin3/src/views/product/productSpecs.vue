@@ -14,7 +14,9 @@
                 </span>
             </div>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" />
+        <el-table-column prop="createTime" label="创建时间" #default="scope">
+            {{ formatDateTime(scope.row.createTime) }}
+        </el-table-column>
         <el-table-column label="操作" align="center" width="200" #default="scope">
             <el-button type="primary" size="small" @click="editShow(scope.row)">
                 修改
@@ -71,6 +73,7 @@ import {
     UpdateProductSpecById,
 } from '@/api/productSpecs.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { formatDateTime } from '@/utils/date-util.js'
 
 // 表格数据模型
 const list = ref([])

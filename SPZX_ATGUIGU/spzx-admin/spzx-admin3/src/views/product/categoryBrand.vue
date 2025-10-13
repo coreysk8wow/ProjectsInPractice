@@ -52,7 +52,9 @@
         <el-table-column prop="logo" label="品牌图标" #default="scope">
             <img :src="scope.row.logo" width="50" />
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" />
+        <el-table-column prop="createTime" label="创建时间" #default="scope" >
+            {{ formatDateTime(scope.row.createTime) }}
+        </el-table-column>
         <el-table-column label="操作" align="center" width="200">
             <template v-slot:default="scope">
                 <el-button type="primary" size="small" @click="editShow(scope.row)">
@@ -81,6 +83,7 @@ import {
     DeleteCategoryBrandById,
 } from '@/api/categoryBrand.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import {formatDateTime} from '@/utils/date-util.js'
 
 const props = {
     lazy: true,

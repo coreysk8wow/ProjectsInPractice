@@ -1,8 +1,8 @@
-import { Service } from "typedi";
-import { IFileUploadService } from "./interfaces/file-upload-service-intf";
 import { minioClient } from "@/config/minio-config";
-import { v4 as uuidv4 } from "uuid";
 import { config } from "dotenv";
+import { Service } from "typedi";
+import { v4 as uuidv4 } from "uuid";
+import { IFileUploadService } from "./interfaces/file-upload-service-intf";
 
 // Specify custom .env path
 config({ path: ".env" });

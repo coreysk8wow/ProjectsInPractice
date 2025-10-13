@@ -56,7 +56,7 @@ public class CategoryService implements ICategoryService {
             response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
             //response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              List<Category> categoryList = categoryMapper.selectAll();
+            List<Category> categoryList = categoryMapper.selectAll();
             List<CategoryExcelResp> categoryExcelRespList = new ArrayList<>(categoryList.size());
 
             // 将从数据库中查询到的Category对象转换成CategoryExcelVo对象

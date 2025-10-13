@@ -1,4 +1,4 @@
-import { Nullable } from "../../types/basic-type.js";
+import { Nullable } from "@/types/basic-type.js";
 
 export class Result<T> {
     code: Nullable<number>;
@@ -47,6 +47,7 @@ export class ResultCodeEnum {
     static readonly DATA_ERROR = new ResultCodeEnum(204, "数据异常");
     static readonly ACCOUNT_STOP = new ResultCodeEnum(216, "账号已停用");
     static readonly STOCK_LESS = new ResultCodeEnum(219, "库存不足");
+    static readonly PARAM_ERROR = new ResultCodeEnum(400, "参数错误");
 
     #code;
     #message;
@@ -78,9 +79,9 @@ export class ResultCodeEnum {
 
 export class PageInfo<T> {
     list: T[];
-    total: number;
+    total?: number;
 
-    constructor(list: T[], total: number) {
+    constructor(list: T[], total?: number) {
         this.list = list;
         this.total = total;
     }

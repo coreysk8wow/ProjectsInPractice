@@ -17,4 +17,3 @@ export function isObjectEmpty(obj: object | null | undefined): boolean {
 export function safeGet<T>(value: T | null | undefined, defaultValue: T): T {
     return value === null || value === undefined ? defaultValue : value;
 }
-

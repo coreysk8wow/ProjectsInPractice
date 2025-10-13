@@ -1,5 +1,7 @@
 import { Nullable } from "@/types/basic-type";
-import { IBaseEntity } from "./baseEntity-intf";
+import { IBaseEntity } from "@/model/entity/interfaces/baseEntity-intf";
+import Big from "big.js";
+
 
 
 /** 产品单元实体类 */
@@ -52,8 +54,8 @@ export interface IProduct extends IBaseEntity {
     unitName: Nullable<string>; // 计量单位
     sliderUrls: Nullable<string>; // 轮播图url
     specValue: Nullable<string>; // 商品规格值json串
-    status: Nullable<number>; // 线上状态：0-初始值，1-上架，-1-自主下架
-    auditStatus: Nullable<number>; // 审核状态
+    status: number; // 线上状态：0-初始值，1-上架，-1-自主下架
+    auditStatus: number; // 审核状态：0-初始值，1-通过，-1-未通过
     auditMessage: Nullable<string>; // 审核信息
 
     // 扩展的属性，用来封装响应的数据
@@ -61,8 +63,8 @@ export interface IProduct extends IBaseEntity {
     category1Name: Nullable<string>; // 一级分类名称
     category2Name: Nullable<string>; // 二级分类名称
     category3Name: Nullable<string>; // 三级分类名称
-    productSkuList: IProductSku[]; // sku列表集合
-    detailsImageUrls: Nullable<string>; // 图片详情列表
+    productSkuList?: IProductSku[]; // sku列表集合
+    detailsImageUrls?: Nullable<string>; // 图片详情列表
 }
 
 
@@ -72,9 +74,9 @@ export interface IProductSku extends IBaseEntity {
     skuName: Nullable<string>; // skuName
     productId: Nullable<number>; // 商品ID
     thumbImg: Nullable<string>; // 缩略图路径
-    salePrice: Nullable<number>; // 售价
-    marketPrice: Nullable<number>; // 市场价
-    costPrice: Nullable<number>; // 成本价
+    salePrice: Nullable<string>; // 售价
+    marketPrice: Nullable<string>; // 市场价
+    costPrice: Nullable<string>; // 成本价
     stockNum: Nullable<number>; // 库存数
     saleNum: Nullable<number>; // 销量
     skuSpec: Nullable<string>; // sku规格信息json
